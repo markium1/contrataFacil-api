@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PrestadorController;
+use App\Http\Controllers\ServicoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,11 @@ Route::get('/teste', function(){
 //uri, [nomeClasseController:class, 'metodo']
 Route::get('/prestador',[PrestadorController::class, 'index']);
 Route::post('/prestador',[PrestadorController::class, 'store']);
+
+
+Route::get('/servico',[ServicoController::class, 'index']);
+Route::get('/servico/{id}',[ServicoController::class, 'show']);
+Route::post('/servico',[ServicoController::class, 'store']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
