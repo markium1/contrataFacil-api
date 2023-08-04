@@ -13,7 +13,14 @@ class PrestadorController extends Controller
     public function index()
     {
         //
-        return Prestador::all();
+        $prestadores = Prestador::paginate(10);
+        return response()->json([
+            'data' => $prestadores->items(),
+            'current_page' => $prestadores->currentPage(),
+            'per_page' => $prestadores->perPage(),
+            'total' => $prestadores->total(),
+            'last_page' => $prestadores->lastPage(),
+        ]);
     }
 
     /**
@@ -29,7 +36,13 @@ class PrestadorController extends Controller
      */
     public function show(string $id)
     {
-        //
+        dd("teste");
+        $prestador = Prestador::find($id);
+        dd($prestador);
+        if (!$prestador) {
+            return response()->json(['message' => 'Produto não encontrado'], 404);
+        }
+        return response()->json(['data' => $prestador]);
     }
 
     /**
