@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nome');
             $table->string('descricao');
             $table->decimal('valor');
-            $table->unsignedBigInteger('id_prestador');
+            $table->unsignedBigInteger('prestador_id');
             $table->timestamps();
 
             $table->foreign('id_prestador')->references('id')->on('prestadores');

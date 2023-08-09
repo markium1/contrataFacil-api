@@ -22,8 +22,9 @@ Route::get('/teste', function(){
 
 //uri, [nomeClasseController:class, 'metodo']
 Route::get('/prestador',[PrestadorController::class, 'index']);
+Route::get('/prestador/{id}',[PrestadorController::class, 'show']);
 Route::post('/prestador',[PrestadorController::class, 'store']);
-
+Route::get('/search', [PrestadorController::class, 'search']);
 
 Route::get('/servico',[ServicoController::class, 'index']);
 Route::get('/servico/{id}',[ServicoController::class, 'show']);

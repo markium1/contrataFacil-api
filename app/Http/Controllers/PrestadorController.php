@@ -10,10 +10,18 @@ class PrestadorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
         $prestadores = Prestador::paginate(10);
+
+        $searchTerm = $request->input('term');
+        if($searchTerm){
+            $results = Prestador::where('nome', 'LIKE',"%$searchTerm%")->orWhere('telefone', 'LIKE', "%$searchTerm%")->get();
+
+            return response()->json(['data' => $results]);
+        }
+
         return response()->json([
             'data' => $prestadores->items(),
             'current_page' => $prestadores->currentPage(),
@@ -28,7 +36,22 @@ class PrestadorController extends Controller
      */
     public function store(Request $request)
     {
-        return Prestador::create($request->all());
+        $request->validate([
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $filePath = $file->store('photos', 'public');
+            $request["foto"] = $filePath;
+            // Aqui você pode adicionar lógica adicional, como salvar o nome do arquivo no banco de dados
+        }
+        $prestador = Prestador::create($request->all());
+
+        if($prestador){
+            return response()->json(['resultado' => "Cadastrado com Sucesso"]);
+        }
+
+        return response()->json(['resultado' => "Erro ao Efetuar o cadastro"], 400);
     }
 
     /**
@@ -36,13 +59,15 @@ class PrestadorController extends Controller
      */
     public function show(string $id)
     {
-        dd("teste");
         $prestador = Prestador::find($id);
-        dd($prestador);
         if (!$prestador) {
-            return response()->json(['message' => 'Produto não encontrado'], 404);
+            return response()->json(['message' => 'Prestador não encontrado'], 404);
         }
-        return response()->json(['data' => $prestador]);
+        $response = [
+            'prestador' => $prestador,
+            'servicos' =>$prestador->servicos
+        ];
+        return response()->json(['data' => $response]);
     }
 
     /**
@@ -59,5 +84,9 @@ class PrestadorController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function search(Request $request){
+
     }
 }

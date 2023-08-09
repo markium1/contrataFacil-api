@@ -1,66 +1,165 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ContrataFácil API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Bem-vindo à documentação da API ContrataFácil API! Esta API permite realizar diversas operações relacionadas a Cadastro e consultas de Prestadores de Serviços e os Serviços.
 
-## About Laravel
+## Instalação do projeto
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Aqui vai estar o passo-a-passo de como instalar e rodar a API localmente
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 1. Requisitos
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**Tenha o PHP instalado (pode ser o XAMPP ou MAMPP)** [Link para o XAMPP](https://www.apachefriends.org/pt_br/download.html)
 
-## Learning Laravel
+**Tenha o Composer instalado** [Link Composer](https://getcomposer.org/download/)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 2. Clone o projeto
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+`git clone https://github.com/markium1/contrataFacil-api`
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 3. Dentro da pasta do projeto execute os seguintes comandos para iniciar e configurar o projeto
 
-## Laravel Sponsors
+-   **Instalar Dependências**
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Abra um terminal ou prompt de comando e navegue até a pasta do projeto clonado. Em seguida, execute o seguinte comando para instalar as dependências do projeto listadas no arquivo composer.json
 
-### Premium Partners
+`composer install`
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+-   **Configurar o Arquivo .env**
 
-## Contributing
+Faça uma cópia do arquivo .env.example na mesma pasta e renomeie-a para .env. Abra o arquivo .env e configure as informações de conexão com o banco de dados e outras configurações específicas do seu ambiente.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+`cp .env.example .env`
 
-## Code of Conduct
+-   **Gerar a Chave de Criptografia**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Execute o comando para gerar a chave de criptografia do Laravel no arquivo .env
 
-## Security Vulnerabilities
+`php artisan key:generate`
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+-   **Criar o Banco de Dados**
+    Se você configurou as informações de conexão com o banco de dados no arquivo .env, execute o seguinte comando para criar o banco de dados vazio
 
-## License
+`php artisan migrate`
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+-   **Iniciar o Servidor de Desenvolvimento**
+
+Execute o servidor de desenvolvimento do Laravel para iniciar o projeto
+
+`php artisan serve`
+
+-   **Acessar o Projeto**
+
+Seu projeto estará disponível na URL: localhost:8000
+
+## Endpoints Principais
+
+Aqui estão alguns dos principais endpoints da API:
+
+### 1. Cadastro Prestadores e Serviços
+
+**Endpoint Prestador:** `/api/prestador`
+
+**Endpoint Servico:** `/api/servico`
+
+Descrição: Realiza o de um prestador ou serviço.
+
+Método: POST
+
+Parâmetros:
+
+**Prestador**
+
+-   `nome` (string): O nome do prestador.
+-   `telefone` (string): O telefone do prestador.
+-   `email`(string): O email do prestador.
+-   `foto`(string): Uma foto do prestador.
+
+**Serviço**
+
+-   `nome` (string): O nome do serviço.
+-   `descricao` (string): A descrição.
+-   `valor`(string): O email do prestador.
+-   `prestador_id`(int): ID do prestador de serviço.
+
+Resposta de Sucesso:
+
+```json
+{
+    "resultado": "Cadastrado com Sucesso"
+}
+```
+
+Resposta de Erro:
+
+```json
+{
+    "resultado": "Erro ao efetuar o cadastro"
+}
+```
+
+### 2. Buscar Prestadores e Serviços
+
+**Endpoint Prestador:** `/api/prestador`
+
+**Endpoint Servico:** `/api/servico`
+
+Descrição: Realiza o de um prestador ou serviço.
+
+Método: GET
+
+Parâmetros (opcionais):
+
+**Prestador**
+
+-   `/api/prestador?page={num_page}` Para buscar por uma pagina específica
+-   `/api/prestador?term={term}` Para filtrar por um termo
+
+**Serviço**
+
+-   `/api/servico?page={num_page}` Para buscar por uma pagina específica
+-   `/api/servico?term={term}` Para filtrar por um termo
+
+Resposta de Sucesso Prestador:
+
+```json
+{
+    "data": [
+        {
+            "id": 2,
+            "nome": "MARCOS",
+            "telefone": "9999999",
+            "email": "Marcos@gmail",
+            "foto": "foto",
+            "created_at": "2023-08-04T18:06:07.000000Z",
+            "updated_at": "2023-08-04T18:06:07.000000Z"
+        }
+    ]
+}
+```
+
+Resposta de Sucesso Serviço:
+
+```json
+{
+    "data": [
+        {
+            "id": 2,
+            "nome": "Limpador de estofados",
+            "descricao": "Limpar os mais variados tipos de estofados, sejam sofás, colchões, bancos de carro...",
+            "valor": "150.00",
+            "prestador_id": 1,
+            "created_at": "2023-08-04T12:52:05.000000Z",
+            "updated_at": "2023-08-04T12:52:05.000000Z",
+            "prestador": {
+                "id": 1,
+                "nome": "Renata",
+                "telefone": "9999999",
+                "email": "renata@gmail",
+                "foto": "foto",
+                "created_at": "2023-08-04T12:51:34.000000Z",
+                "updated_at": "2023-08-04T12:51:34.000000Z"
+            }
+        }
+    ]
+}
+```

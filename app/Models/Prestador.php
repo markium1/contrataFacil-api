@@ -10,4 +10,8 @@ class Prestador extends Model
     use HasFactory;
     protected $table = 'prestadores';
     protected $fillable = ['nome', 'telefone', 'email', 'foto'];
+
+    public function servicos(){
+        return $this->hasMany(Servico::class);
+    }
 }

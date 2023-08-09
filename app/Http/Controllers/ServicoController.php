@@ -10,10 +10,19 @@ class ServicoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $servicos = Servico::paginate(10);
+        $servicos = Servico::with('prestador')->paginate(10);
+        $searchTerm = $request->input('term');
+
+        if($searchTerm){
+            $results = Servico::with('prestador')->where('nome', 'LIKE',"%$searchTerm%")->orWhere('descricao', 'LIKE', "%$searchTerm%")->get();
+
+            return response()->json(['data' => $results]);
+        }
+
+        //dd($servicos->items());
         return response()->json([
             'data' => $servicos->items(),
             'current_page' => $servicos->currentPage(),
@@ -29,7 +38,12 @@ class ServicoController extends Controller
     public function store(Request $request)
     {
         //
-        return Servico::create($request->all());
+        $servico = Servico::create($request->all());
+        if($servico){
+            return response()->json(['resultado' => "Cadastrado com Sucesso"]);
+        }
+        return response()->json(['resultado' => "Erro ao Efetuar o cadastro"], 400);
+        
     }
 
     /**
@@ -38,6 +52,17 @@ class ServicoController extends Controller
     public function show(string $id)
     {
         //
+        $servico = Servico::find($id);
+        if (!$servico) {
+            return response()->json(['message' => 'Serviço não encontrado'], 404);
+        }
+
+        $response = [
+            'servico'=> $servico,
+            'prestador' => $servico->prestador
+
+        ];
+        return response()->json(['data' => $response]);
     }
 
     /**
@@ -54,5 +79,13 @@ class ServicoController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function search(Request $request){
+        $searchTerm = $request->input('term');
+
+        $results = Servico::where('nome', 'LIKE',"%$searchTerm%")->orWhere('descricao', 'LIKE', "%$searchTerm%")->get();
+
+        return response()->json(['results' => $results]);
     }
 }

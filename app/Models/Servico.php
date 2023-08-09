@@ -9,5 +9,9 @@ class Servico extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nome', 'descricao', 'valor', 'id_prestador'];
+    protected $fillable = ['nome', 'descricao', 'valor', 'prestador_id'];
+
+    public function prestador(){
+        return $this->belongsTo(Prestador::class);
+    }
 }
