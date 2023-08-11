@@ -80,12 +80,29 @@ class ServicoController extends Controller
     {
         //
     }
+    public function uploadCSV(Request $request)
+    {
+        $request->validate([
+            'csv_file' => 'required|mimes:csv,txt|max:2048', // Validação do arquivo CSV
+        ]);
 
-    public function search(Request $request){
-        $searchTerm = $request->input('term');
+        if ($request->hasFile('csv_file')) {
+            $path = $request->file('csv_file')->getRealPath();
 
-        $results = Servico::where('nome', 'LIKE',"%$searchTerm%")->orWhere('descricao', 'LIKE', "%$searchTerm%")->get();
+            $data = array_map('str_getcsv', file($path));
 
-        return response()->json(['results' => $results]);
+            foreach ($data as $row) {
+                Servico::create([
+                    'nome' => $row[0],
+                    'descricao' => $row[1],
+                    'valor' =>(float) $row[2],
+                    'prestador_id' => (int) $row[3]
+                ]);
+            }
+
+            return  response()->json(['resultado' => "Cadastrado com Sucesso"]);;
+        }
+
+        return response()->json(['resultado' => "ERRO"]);;
     }
 }

@@ -29,7 +29,7 @@ Route::get('/search', [PrestadorController::class, 'search']);
 Route::get('/servico',[ServicoController::class, 'index']);
 Route::get('/servico/{id}',[ServicoController::class, 'show']);
 Route::post('/servico',[ServicoController::class, 'store']);
-
+Route::post('/servico-csv',[ServicoController::class, 'uploadCSV']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
